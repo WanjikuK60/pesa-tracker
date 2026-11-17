@@ -18,7 +18,7 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
       </div>
 
       {visible.length === 0 ? (
-        <p className="muted empty">Hakuna kitu hapa bado. Add your first expense.</p>
+        <p className="muted empty">Hakuna kitu hapa bado. No expenses for this month yet.</p>
       ) : (
         <ul className="list">
           {visible.map((e) => {

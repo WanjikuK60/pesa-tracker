@@ -123,3 +123,31 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .empty { text-align: center; padding: 1rem 0; }
 
 footer { text-align: center; }
+
+.month-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.month-label { display: grid; justify-items: center; gap: 0.15rem; }
+.icon-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.icon-btn:hover { border-color: var(--green); }
+.link {
+  background: none;
+  border: 0;
+  color: var(--green);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+}

@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import ExpenseForm from './components/ExpenseForm'
 import ExpenseList from './components/ExpenseList'
+import MonthPicker from './components/MonthPicker'
 import Summary from './components/Summary'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { currentMonth, inMonth } from './utils/month'
 
 export default function App() {
   const [expenses, setExpenses] = useLocalStorage('pesa.expenses', [])
   const [budget, setBudget] = useLocalStorage('pesa.budget', 20000)
   const [filter, setFilter] = useState('all')
   const [editingId, setEditingId] = useState(null)
+  const [month, setMonth] = useState(currentMonth())
 
   const editing = expenses.find((e) => e.id === editingId) ?? null
+  const monthExpenses = expenses.filter((e) => inMonth(e, month))
 
   function saveExpense(expense) {
     setExpenses((prev) =>
@@ -19,6 +23,8 @@ export default function App() {
         : [expense, ...prev], // add
     )
     setEditingId(null)
+    // Jump to the expense's month so it never "disappears" after saving.
+    setMonth(expense.date.slice(0, 7))
   }
 
   function startEdit(id) {
@@ -38,7 +44,8 @@ export default function App() {
         <p className="muted">Know where your shillings go.</p>
       </header>
 
-      <Summary expenses={expenses} budget={budget} onBudgetChange={setBudget} />
+      <MonthPicker month={month} onChange={setMonth} />
+      <Summary expenses={monthExpenses} budget={budget} onBudgetChange={setBudget} />
       <ExpenseForm
         key={editingId ?? 'new'}
         editing={editing}
@@ -46,7 +53,7 @@ export default function App() {
         onCancel={() => setEditingId(null)}
       />
       <ExpenseList
-        expenses={expenses}
+        expenses={monthExpenses}
         filter={filter}
         onFilterChange={setFilter}
         onEdit={startEdit}

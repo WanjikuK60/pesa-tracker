@@ -6,4 +6,9 @@ export default defineConfig({
   plugins: [react()],
   // GitHub Pages serves the site at /<repo-name>/, so assets need this prefix.
   base: '/pesa-tracker/',
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test/setup.js',
+  },
 })
